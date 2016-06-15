@@ -1,0 +1,41 @@
+# depslib dependency file v1.0
+1462408546 source:d:\brino_matias\parcial_1\lib.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"lib.h"
+
+1462408660 source:d:\brino_matias\parcial_1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lib.h"
+
+1462409299 d:\brino_matias\parcial_1\lib.h
+
+1466009012 source:c:\laboratoriouno\parcial_1\lib.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"lib.h"
+
+1466005698 c:\laboratoriouno\parcial_1\lib.h
+	"ArrayList.h"
+
+1466010723 source:c:\laboratoriouno\parcial_1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lib.h"
+	"ArrayList.h"
+
+1466000545 source:c:\laboratoriouno\parcial_1\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1465168954 c:\laboratoriouno\parcial_1\arraylist.h
+
