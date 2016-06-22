@@ -39,3 +39,53 @@
 
 1465168954 c:\laboratoriouno\parcial_1\arraylist.h
 
+1466005256 source:d:\tp4\tp4_laboratori-master\parcial_1_arraylist\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1466034250 d:\tp4\tp4_laboratori-master\parcial_1_arraylist\arraylist.h
+
+1466033831 source:d:\tp4\tp4_laboratori-master\parcial_1_arraylist\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lib.h"
+	"ArrayList.h"
+
+1466032047 d:\tp4\tp4_laboratori-master\parcial_1_arraylist\lib.h
+	"ArrayList.h"
+
+1466034106 source:d:\tp4\tp4_laboratori-master\parcial_1_arraylist\lib.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"lib.h"
+
+1466022854 source:c:\laboratoriouno\parcial_1_arraylist\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1466022854 c:\laboratoriouno\parcial_1_arraylist\arraylist.h
+
+1466555580 source:c:\laboratoriouno\parcial_1_arraylist\lib.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"lib.h"
+
+1466555635 c:\laboratoriouno\parcial_1_arraylist\lib.h
+	"ArrayList.h"
+
+1466453410 source:c:\laboratoriouno\parcial_1_arraylist\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lib.h"
+	"ArrayList.h"
+

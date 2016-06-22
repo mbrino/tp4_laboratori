@@ -66,7 +66,7 @@ int newUser(ArrayList* pList, EUsuario* eUser);
 * @param nickName se utilizara para identificar el usuario a modificar.
 * @return 0 para cuando el alta se dio de forma exitosa -1 para cualquier error
 */
-int modifUser(EUsuario lista[], int length, char nickName[], char name[], char mail[], char password[]);
+int modifUser(ArrayList* pList, void* pElement, void* pElementCpy);
 
 /**
 * @brief borra de forma lógica personas
@@ -75,27 +75,25 @@ int modifUser(EUsuario lista[], int length, char nickName[], char name[], char m
 * @param nickName se utilizara para identificar el usuario a dar de baja.
 * @return 0 para cuando el alta se dio de forma exitosa -1 para cualquier error
 */
-int deleteUser(EUsuario lista[], int length, char nickName[]);
+int deleteUser(ArrayList* pList, void* pElement);
 
 /**
 * @brief Alta de comentarios
-* @param lista el array se pasa como parametro.
-* @param length longitud del array.
+* @param pList puntero al arrayList.
 * @param nickName alias del usuario.
 * @param comment comentario ingresado.
-* @return 0 para cuando el alta se dio de forma exitosa -1 para cualquier error
+* @return NULL si no se pudo agregar el nuevo comentario
 */
-int newComment(EComment lista[], int length, char nickName[], char commet[]);
+EComment* newComment(ArrayList* pList, char nickName[], char commet[]);
 
 /**
-* @brief Alta de me gusta
+* @brief Alta de LIKES
 * @param lista el array se pasa como parametro.
-* @param length longitud del array.
 * @param nickName alias del usuario.
 * @param idComment identificador del comentario.
 * @return 0 para cuando el alta se dio de forma exitosa -1 para cualquier error
 */
-int newLike(EComment lista[], int length, char nickName[], int idComment);
+int newLike(ArrayList* pList, int idComment);
 
 /**
 * @brief Obtiene un nickName valido.
@@ -140,7 +138,7 @@ int getMail(char* input,char message[],char eMessage[], int lowLimit, int hiLimi
 * @param hiLimit Limite superior a validar.
 * @return Si obtuvo el numero [0] si no [-1]
 */
-int getIdComment(int* input,char message[],char eMessage[], int lowLimit, int hiLimit);
+int getIdComment(int* input,char message[],char eMessage[], int lowLimit);
 
 /**
 * @brief Informe del usuario con mayor cantidad de comentarios.
@@ -153,4 +151,42 @@ int getIdComment(int* input,char message[],char eMessage[], int lowLimit, int hi
 */
 void informes(EUsuario listaUsu[], int lengthUsu, EComment listaComment[], int lengthComm);
 
+/**
+* @brief Genera un nuevo id de forma secuencial para un arrayList
+* @param pList arrayList a partir del cual se generará el secuencial.
+* @return -1 si no se pudo generar el id.
+*/
+int newIdComment(ArrayList* pList);
+
+/**
+* @brief Lee desde un archivo y lo copia a un arrayList
+* @param pList arrayList que guardara
+* @param pFile puntero del archivo
+* @return -1  si falla 0 si la copia es exitosa
+*/
+int readFromFileUser(ArrayList* pList, char nombre[]);
+
+/**
+* @brief guarda la informacion del arrayList en un archivo
+* @param pList arrayList que guardara
+* @param pFile puntero del archivo
+* @return -1  si falla 0 si la copia es exitosa
+*/
+int copyToFileUser(ArrayList* pList, char nombre[]);
+
+/**
+* @brief Lee desde un archivo y lo copia a un arrayList
+* @param pList arrayList que guardara
+* @param pFile puntero del archivo
+* @return -1  si falla 0 si la copia es exitosa
+*/
+int readFromFileComment(ArrayList* pList, char nombre[]);
+
+/**
+* @brief guarda la informacion del arrayList en un archivo
+* @param pList arrayList que guardara
+* @param pFile puntero del archivo
+* @return -1  si falla 0 si la copia es exitosa
+*/
+int copyToFileComment(ArrayList* pList, char nombre[]);
 #endif // FUNCIONES_H_INCLUDED

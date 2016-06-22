@@ -109,7 +109,7 @@ int al_contains(ArrayList* pList, void* pElement);
  *                  - ( 0) if Ok
  *
  */
-int al_set(ArrayList* pList, int index,void* pElement);
+int al_set(ArrayList* pList, int index, void* pElement);
 
 
 /** \brief  Remove an element by index

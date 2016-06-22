@@ -4,20 +4,23 @@
 #include "lib.h"
 #include "ArrayList.h"
 
+#define USERS "users.dat"
+#define COMMENTS "comments.dat"
+
 int main()
 {
     char seguir='s';
     int opcion=0;
     char nickName[31];
-    char name[31];
-    char mail[51];
     char password[21];
-    char comment[201];
+    char comment[201]={""};
     int idComment;
 
     EUsuario* eUser=NULL;
     EUsuario* eUser2;
     EUsuario *usuarioAux;
+
+    EComment* pComment;
 
     ArrayList* eUserList;
     EUsuario listaUsuarios[MAXUS];
@@ -31,13 +34,17 @@ int main()
     eCommentList=al_newArrayList();
     initialiceArrayComment(listaComments, MAXUS);
 
+    readFromFileUser(eUserList, USERS);
+    readFromFileComment(eCommentList, COMMENTS);
+    //readFromFile(eCommentList, COMMENTS);
+
     eUser2=(EUsuario*)malloc(sizeof(EUsuario));
     strcpy(eUser2->nickName,"Maty");
+    //printf("%s", eUser2->nickName);
     strcpy(eUser2->name, "mat");
     strcpy(eUser2->password, "12345");
     strcpy(eUser2->mail, "mat@mat");
-    eUserList->add(eUserList, eUser2);
-    free(eUser2);
+    //eUserList->add(eUserList, eUser2);
 
     while(seguir=='s')
     {
@@ -48,8 +55,8 @@ int main()
         printf("* 3- Eliminar usuario                   *\n");
         printf("* 4- Crear nuevo comentario             *\n");
         printf("* 5- Agregar LIKE                       *\n");
-        printf("* 6- Informar                           *\n");
-        printf("* 7- Listar                             *\n");
+        //printf("* 6- Informar                           *\n");
+        //printf("* 7- Listar                             *\n");
         printf("* 8- Salir                              *\n");
         printf("*                                       *\n");
         printf("*****************************************\n");
@@ -74,23 +81,22 @@ int main()
                         printf("El usuario fue dado de alta exitosamente\n");
                     }
                 }
-
-                free(eUser);
+                copyToFileUser(eUserList, USERS);
                 system("pause");
                 break;
             case 2:
 
-                if(getNick(nickName, "Ingrese el nick del usuario que quiere actualizar\n", "El nick ingresado no es valido\n", 2, 30)==0)
+                usuarioAux=(EUsuario*)malloc(sizeof(EUsuario));
+                if(getNick(usuarioAux->nickName, "Ingrese el nick del usuario que quiere actualizar\n", "El nick ingresado no es valido\n", 2, 30)==0)
                 {
-                    eUser=findByNick(eUserList, nickName);
-                    eUser2=eUserList->pElements[0];
-                    printf("Valor del nick encontrado: %s\n", eUser->nickName);
-                    printf("Valor del nick 2 encontrado: %s\n", eUser2->nickName);
+                    eUser=findByNick(eUserList, usuarioAux->nickName);
                     if(eUser!=NULL)
                     {
-                        getString(eUser->name, "Ingrese un nombre\n", "El nombre debe tener como minimo 2 caracteres y como maximo 30\n", 2, 30);
-                        getMail(eUser->mail, "Ingrese un mail", "El mail debe contener @\n", 3, 50);
-                        getString(eUser->password, "Ingrese un password\n", "El password debe ser mayor a 8 digitos y menor a 20\n", 5, 20);
+                        getString(usuarioAux->name, "Ingrese un nombre\n", "El nombre debe tener como minimo 2 caracteres y como maximo 30\n", 2, 30);
+                        getMail(usuarioAux->mail, "Ingrese un mail", "El mail debe contener @\n", 3, 50);
+                        getString(usuarioAux->password, "Ingrese un password\n", "El password debe ser mayor a 8 digitos y menor a 20\n", 5, 20);
+                        modifUser(eUserList, eUser, usuarioAux);
+                        printf("Se actualizó el registro\n");
 
                     }else
                     {
@@ -98,44 +104,50 @@ int main()
                     }
 
                 }
-
-                free(eUser);
+                copyToFileUser(eUserList, USERS);
                 system("pause");
                 break;
             case 3:
-                getNick(nickName, "Ingrese el nick del usuario que quiere actualizar\n", "El nick ingresado no es valido\n", 2, 30);
-                if(findByNick(eUserList,  nickName)!=NULL)
-                {
 
-                    if(deleteUser(listaUsuarios, MAXUS, nickName)!=0)
-                    {
-                        printf("La baja no se pudo realizar, ah ocurrido un error inesperado\n");
-                    }else
-                    {
-                        printf("La baja fue exitosa\n");
-                    }
+                getNick(nickName, "Ingrese el nick del usuario que quiere eliminar\n", "El nick ingresado no es valido\n", 2, 30);
+                eUser = findByNick(eUserList,  nickName);
+                if(eUser!=NULL)
+                {
+                    deleteUser(eUserList, eUser);
                 }else
                 {
                     printf("No existe el nick ingresado\n");
                 }
 
+                copyToFileUser(eUserList, USERS);
                 system("pause");
                 break;
             case 4:
                 getNick(nickName, "Ingrese el nick del usuario que quiere actualizar\n", "El nick ingresado no es valido\n", 2, 30);
-                usuarioAux=findByNick(eUserList,  nickName);
-                if(usuarioAux!=NULL)
+                eUser=findByNick(eUserList,  nickName);
+                if(eUser!=NULL)
                 {
                     getString(password, "Ingrese un password\n", "El password debe ser mayor a 8 digitos y menor a 20", 5, 20);
-                    if(strcmp(password, usuarioAux->password)==0)
+                    if(strcmp(password, eUser->password)==0)
                     {
                         getString(comment, "Ingrese comentario\n", "El comentario no puede contener mas de 200 caracteres", 1, 200);
-                        newComment(listaComments, MAXUS, nickName, comment);
+                        pComment = newComment(eCommentList, nickName, comment);
+                        if(pComment!=NULL)
+                        {
+                            printf("El comentario fue dado de alta con el id: %d\n", pComment->idComment);
+                        }else
+                        {
+                            printf("No se pudo dar de alta el comentario\n");
+                        }
                     }else
                     {
                         printf("Contraseña incorrecta\n");
                     }
+                }else
+                {
+                    printf("No existe el nick solicitado\n");
                 }
+                copyToFileComment(eCommentList, COMMENTS);
                 system("pause");
                 break;
             case 5:
@@ -146,13 +158,21 @@ int main()
                     getString(password, "Ingrese un password\n", "El password debe ser mayor a 8 digitos y menor a 20", 5, 20);
                     if(strcmp(password, usuarioAux->password)==0)
                     {
-                        getIdComment(&idComment, "Ingrese comentario\n", "El comentario no puede contener mas de 200 caracteres", 1, 200);
-                        newLike(listaComments, MAXUS, nickName, idComment);
+                        getIdComment(&idComment, "Ingrese el id del comentario\n", "El id no puede ser negativo", 0);
+                        if(newLike(eCommentList, idComment)==0)
+                        {
+                            printf("Like exitoso\n");
+                        }else
+                        {
+                            printf("No se creo el like\n");
+                        }
                     }else
                     {
                         printf("Contraseña incorrecta\n");
                     }
                 }
+
+                copyToFileComment(eCommentList, COMMENTS);
                 system("pause");
                 break;
             case 6:
@@ -169,6 +189,7 @@ int main()
         }
     }
     free(eUserList);
+    free(eCommentList);
 
     return 0;
 }
